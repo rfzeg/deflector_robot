@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<robot name="deflector_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="1.0" />
+  <xacro:property name="axel_offset" value="0.1" />
+  <xacro:property name="width" value="0.1" />
+  <xacro:property name="height1" value="2.0" />
+  <xacro:property name="heighta" value="1.0" />
+  <xacro:property name="height2" value="1.0" />
+  <xacro:property name="height3" value="1.0" />
+
+  <!-- Gazebo materials -->
+  <xacro:include filename="$(find deflector_robot)/urdf/deflector.gazebo" />
+
+  <link name="world"/>
+
+  <joint name="joint" type="prismatic">
+    <limit effort="1000.0" lower="1.0" upper="0" velocity="0.5"/>
+    <origin xyz="0 0 0  " rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="link1"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+  </joint>
+
+  <!-- Ground/Base Link -->
+  <link name="link1">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	   <box size="${height1} ${width} ${width} "/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+       <box size="${height1} ${width} ${width} "/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+  </link>
+
+  <joint name="joint1" type="prismatic">
+    <limit effort="1000.0" lower="-${height1}" upper="0" velocity="0.5"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="${height1 - axel_offset} ${width} 0  " rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.7"/>
+  </joint>
+
+  <!-- Vertical Pole / Middle Link -->
+  <link name="link2">
+    <collision>
+      <origin xyz="${-heighta} 0 ${heighta/2-width/2}" rpy="0 0 0"/>
+      <geometry>
+	   <box size="${width} ${width} ${height2}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="${-heighta} 0 ${heighta/2-width/2}" rpy="0 0 0"/>
+      <geometry>
+	   <box size="${width} ${width} ${height2}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height2*height2)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height2*height2 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+  </link>
+
+  <joint name="joint2" type="prismatic">
+     <limit effort="1000.0" lower="-${height3}" upper="0" velocity="0.5"/>
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="0 ${width} ${height2 - axel_offset*2}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.7"/>
+  </joint>
+
+  <!-- Top Link -->
+  <link name="link3">
+    <collision>
+      <origin xyz="${-heighta + axel_offset-width} ${height3/2- axel_offset} ${width*2}"
+              rpy="${pi/2} 0 0"/>
+      <geometry>
+	   <box size="${width} ${width} ${height3}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="${-heighta + axel_offset-width} ${height3/2- axel_offset} ${width*2}"
+              rpy="${pi/2} 0 0"/>
+      <geometry>
+	   <box size="${width} ${width} ${height3}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 ${height3/2 - axel_offset}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height3*height3)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height3*height3 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+  </link>
+
+
+</robot>

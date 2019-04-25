@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- send urdf to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find deflector_robot)/urdf/deflector.xacro'" />
+
+  <!-- Start Gazebo -->
+
+  <arg name="world" default="empty"/> 
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find deflector_robot)/worlds/demo.world"/> -->
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+  
+    <!--spawn robot in gazebo world-->
+	<arg name= "pos_x" default = "0"/>
+	<arg name= "pos_y" default = "0"/>
+	<arg name= "pos_z" default = "0"/>
+	<arg name= "yaw" default = "0"/>
+
+	<arg name= "robot_name" default= "deflector_robot"/>
+	<node name="urdf_robot_model_spawner" pkg="gazebo_ros" type="spawn_model"
+	args="-param robot_description
+	-urdf
+	-x $(arg pos_x)
+	-y $(arg pos_y)
+	-z $(arg pos_z)
+	-Y $(arg yaw)
+	-model $(arg robot_name)"
+	respawn="false" output="screen"/>
+
+  <!-- Publish joint values from simulation -->
+  <!-- This package reads the robot_description parameter, finds all of the non-fixed joints -->
+  <!-- and publishes a JointState message with all joint positions -->
+  <!-- joint states represent the current state of the robot, not a goal -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+  </node>
+
+  <!-- Publish tf transforms from joint states or rviz, etc -->
+  <!-- Send robot states to tf based on URDF specified by the parameter robot_description -->
+  <!-- and the joint positions from the topic > joint_states  -->
+  <!-- This node publishes a single message with the state of all joints of the robot combined-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+
+
+    <!-- Show in Rviz   -->
+    <!--
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find deflector_robot)/launch/deflector_robot.rviz"/>
+    -->
+
+</launch>
