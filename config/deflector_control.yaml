@@ -1,0 +1,15 @@
+deflector:  # set the namespace to be used in parameter server
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+  
+  # Position Controllers ---------------------------------------
+  joint2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: prismatic_joint2
+    pid: {p: 400.0, i: 0.01, d: 10.0}
+  joint3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: prismatic_joint3
+    pid: {p: 400.0, i: 0.01, d: 10.0}

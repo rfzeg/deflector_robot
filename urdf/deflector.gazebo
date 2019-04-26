@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <robot> 
 
+<!-- include the controller plug-in library in the URDF -->
+<!-- the gazebo_ros_control plugin reads in all the <transmission> tags -->
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/deflector</robotNamespace> <!-- must be same as ns of controller_spawner -->
+  </plugin>
+</gazebo>
+
   <!-- Ground link -->
   <gazebo reference="link1">
     <material>Gazebo/Blue</material>

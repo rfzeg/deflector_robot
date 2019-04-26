@@ -9,6 +9,9 @@ project(deflector_robot)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rospy
+  controller_manager
+  joint_state_controller
+  robot_state_publisher
 )
 
 ## System dependencies are found with CMake's conventions
