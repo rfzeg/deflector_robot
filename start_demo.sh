@@ -9,4 +9,7 @@ xterm  -e  "roslaunch deflector_robot spawn_robot.launch" &
 sleep 6
 
 xterm  -e  "roslaunch deflector_robot ctrl_manager.launch" & 
+sleep 6
 
+# run the commander algorithm
+xterm  -e  "rosrun deflector_robot deflector_robot"
