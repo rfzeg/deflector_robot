@@ -19,8 +19,13 @@
     <material>Gazebo/Orange</material>
   </gazebo>
 
- <!-- Top Link -->
+ <!-- Gantry -->
  <gazebo reference="link3">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+ <!-- Top Link -->
+ <gazebo reference="link4">
     <material>Gazebo/Yellow</material>
   </gazebo>
 

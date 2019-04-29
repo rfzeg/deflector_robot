@@ -9,7 +9,8 @@
   <!--start up the controller plug-ins via the controller manager -->
   <!-- in 'args' specify the controller to be used (position or velocity controller)-->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/deflector" args="joint2_position_controller
+    output="screen" ns="/deflector" args="joint1_position_controller
+                                          joint2_position_controller
                                           joint3_position_controller
                                           joint_state_controller"/>
 

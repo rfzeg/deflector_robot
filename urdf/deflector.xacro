@@ -1,66 +1,92 @@
 <?xml version="1.0"?>
 <robot name="deflector_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+<xacro:include filename="$(find deflector_robot)/urdf/inertia_tensors.urdf.xacro" />
+
   <xacro:property name="PI" value="3.1415926535897931"/>
-  <xacro:property name="mass1" value="100.0" />
-  <xacro:property name="mass2" value="10.0" />
-  <xacro:property name="mass3" value="1.0" />
+  <xacro:property name="mass_l1" value="1000.0" />
+  <xacro:property name="mass_l2" value="100.0" />
+  <xacro:property name="mass_gantry" value="0.1" />
+  <xacro:property name="mass_l4" value="10.0" />
+
   <xacro:property name="axel_offset" value="0.1" />
-  <xacro:property name="width" value="0.1" />
-  <xacro:property name="lenght_a" value="2.0" />
-  <xacro:property name="lenght_b" value="1.0" />
-  <xacro:property name="lenght_c" value="1.0" />
 
-  <!-- Gazebo materials -->
-  <xacro:include filename="$(find deflector_robot)/urdf/deflector.gazebo" />
+  <xacro:property name="x_width_l1" value="0.2" /> <!-- when in horizontal plane this is the height -->
+  <xacro:property name="y_width_l1" value="0.2" />
+  <xacro:property name="lenght_l1" value="3.0" />
 
-  <!-- Used for fixing robot to Gazebo 'base_link' -->
+  <xacro:property name="x_width_l2" value="0.2" /> <!-- same axis as lenght of link 1 -->
+  <xacro:property name="y_width_l2" value="0.2" />
+  <xacro:property name="lenght_l2" value="1.2" />
+
+  <xacro:property name="x_width_gantry" value="0.4" /> <!-- same axis as lenght of link 2 -->
+  <xacro:property name="y_width_gantry" value="0.2" />
+  <xacro:property name="height_gantry" value="0.05" />
+
+  <xacro:property name="x_width_l4" value="0.2" /> <!-- same axis as lenght of link 2 -->
+  <xacro:property name="y_width_l4" value="0.2" />  
+  <xacro:property name="lenght_l4" value="1.0" />
+
+<xacro:property name="base_link_origin">
+  <origin xyz="0 0 ${x_width_l1/2}" rpy="0 ${pi/2} 0" /> <!-- set horizontal orientation -->
+</xacro:property>
+
+<xacro:property name="middle_link_origin">
+  <origin xyz="0 0 ${lenght_l2/2}" rpy="0 0 0" /> <!-- vertical orientation by default -->
+</xacro:property>
+
+<!-- set the origin pose on gantry_link (as child frame) -->
+<xacro:property name="gantry_link_origin">
+  <origin xyz="0 0 ${height_gantry/2}" rpy="0 0 0" />
+</xacro:property>
+
+<!-- set the origin pose on top_link (child frame) -->
+<xacro:property name="top_link_origin">
+  <origin xyz="0 ${-lenght_l4/2+y_width_gantry/2} ${y_width_l4/2}" rpy="${pi/2} 0 0" />
+</xacro:property>
+
+<!-- Gazebo materials -->
+<xacro:include filename="$(find deflector_robot)/urdf/deflector.gazebo" />
+
+<!-- Used for fixing robot to Gazebo 'base_link' -->
   <link name="world"/>
 
-   <!-- To-Do: use a fixed joint to the 'world' -->
-   <joint name="prismatic_joint1" type="prismatic">
-     <limit effort="1000.0" lower="0" upper="1.0" velocity="0.5"/>
-     <origin xyz="0 0 0  " rpy="0 0 0"/>
-     <parent link="world"/>
-     <child link="link1"/>
-     <axis xyz="0 0 1"/>  <!-- In which axis the movement is performed -->
-     <dynamics damping="0.7"/>
-   </joint>
+  <joint name="robot_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="link1"/>
+  </joint>
 
-
-  <!-- Ground/Base Link -->
+ <!-- Base Link -->
   <link name="link1">
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <xacro:insert_block name="base_link_origin" />
       <geometry>
-	   <box size="${lenght_a} ${width} ${width} "/>
+	   <box size="${x_width_l1} ${y_width_l1} ${lenght_l1}"/>
       </geometry>
     </collision>
-
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <xacro:insert_block name="base_link_origin" />
       <geometry>
-       <box size="${lenght_a} ${width} ${width} "/>
+        <box size="${x_width_l1} ${y_width_l1} ${lenght_l1}"/>
       </geometry>
     </visual>
-
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="${mass1}"/>
-      <inertia
-	  ixx="${mass1 / 12.0 * (width*width + lenght_a*lenght_a)}" ixy="0.0" ixz="0.0"
-	  iyy="${mass1 / 12.0 * (lenght_a*lenght_a + width*width)}" iyz="0.0"
-	  izz="${mass1 / 12.0 * (width*width + width*width)}"/>
+      <!-- The center of each inertia box is aligned with the center of mass of its link -->
+      <xacro:insert_block name="base_link_origin" />
+      <mass value="${mass_l1}"/>
+      <xacro:inertial_cuboid mass="${mass_l1}" x_width="${x_width_l1}" y_width="${y_width_l1}" length="${lenght_l1}" >
+      </xacro:inertial_cuboid> 
     </inertial>
   </link>
 
-  <joint name="prismatic_joint2" type="prismatic">
+<joint name="prismatic_joint1" type="prismatic">
     <parent link="link1"/>
     <child link="link2"/>
-    <origin xyz="${-axel_offset + width*3/2} 0 ${width}" rpy="0 0 0"/>
+    <!-- link origin with respect to the origin of the body of the parent link -->
+    <origin xyz="${-lenght_l1/2+x_width_l2/2} 0.0 ${x_width_l1}" rpy="0 0 0"/> <!-- at the beginning, on the surface -->
     <!-- specify upper and lower range of motion -->
     <!-- maximum control effort (1000 N force) and maximum velocity (1.0 m/sec) -->
-    <limit effort="1000.0" lower="0" upper="${lenght_a-width}" velocity="1.0"/>
+    <limit effort="1000.0" lower="0" upper="${lenght_l1-x_width_l2}" velocity="1.0"/> <!-- upper 3.8 -->
     <axis xyz="1 0 0"/>  <!-- In which axis the movement is performed -->
     <dynamics damping="10.0"/>
   </joint>
@@ -68,67 +94,110 @@
   <!-- Vertical Pole / Middle Link -->
   <link name="link2">
     <collision>
-      <origin xyz="${-lenght_b} 0 ${lenght_b/2-width/2}" rpy="0 0 0"/>
+      <xacro:insert_block name="middle_link_origin" />
       <geometry>
-	   <box size="${width} ${width} ${lenght_b}"/>
+       <box size="${x_width_l2} ${y_width_l2} ${lenght_l2}"/>
       </geometry>
     </collision>
 
     <visual>
-      <origin xyz="${-lenght_b} 0 ${lenght_b/2-width/2}" rpy="0 0 0"/>
+      <xacro:insert_block name="middle_link_origin" />
       <geometry>
-	   <box size="${width} ${width} ${lenght_b}"/>
+	   <box size="${x_width_l2} ${y_width_l2} ${lenght_l2}"/>
       </geometry>
     </visual>
-
     <inertial>
-      <origin xyz="0 0 ${lenght_b/2 - axel_offset}" rpy="0 0 0"/>
-      <mass value="${mass2}"/>
-      <inertia
-	  ixx="${mass2 / 12.0 * (width*width + lenght_b*lenght_b)}" ixy="0.0" ixz="0.0"
-	  iyy="${mass2 / 12.0 * (lenght_b*lenght_b + width*width)}" iyz="0.0"
-	  izz="${mass2 / 12.0 * (width*width + width*width)}"/>
+      <xacro:insert_block name="middle_link_origin" />
+      <mass value="${mass_l2}"/>
+      <xacro:inertial_cuboid mass="${mass_l2}" x_width="${x_width_l2}" y_width="${y_width_l2}" length="${lenght_l1}" >
+      </xacro:inertial_cuboid>
     </inertial>
   </link>
 
-  <joint name="prismatic_joint3" type="prismatic">
-    <limit effort="1000.0" lower="0" upper="${lenght_c-width}" velocity="0.5"/>
+
+<joint name="prismatic_joint2" type="prismatic">
     <parent link="link2"/>
     <child link="link3"/>
-    <origin xyz="0 ${width/2} ${lenght_b - axel_offset*2}" rpy="0 0 0"/>
+    <!-- origin pose in the frame of reference of the parent link -->
+    <!-- use p or y to set orientation of Gantry -->
+    <origin xyz="${x_width_l2/2} 0.0 ${x_width_gantry/2}" rpy="0 ${pi/2} 0"/>
+    <!-- specify upper and lower range of motion -->
+    <!-- maximum control effort (1000 N force) and maximum velocity (1.0 m/sec) -->
+    <limit effort="1000.0" lower="${-lenght_l2+x_width_gantry}" upper="0" velocity="1.0"/><!--low: -0.6-->
+    <axis xyz="1 0 0"/>  <!-- In which axis the movement is performed -->
+    <dynamics damping="10.0"/>
+  </joint>
+
+  <!-- Gantry -->
+  <link name="link3">
+    <collision>
+      <xacro:insert_block name="gantry_link_origin" />
+      <geometry>
+	   <box size="${x_width_gantry} ${y_width_gantry} ${height_gantry}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <xacro:insert_block name="gantry_link_origin" />
+      <geometry>
+	   <box size="${x_width_gantry} ${y_width_gantry} ${height_gantry}"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <xacro:insert_block name="gantry_link_origin" />
+            <mass value="${mass_gantry}"/>
+      <xacro:inertial_cuboid mass="${mass_gantry}" x_width="${x_width_gantry}" y_width="${y_width_gantry}" length="${height_gantry}" >
+      </xacro:inertial_cuboid> 
+    </inertial>
+  </link>
+
+<joint name="prismatic_joint3" type="prismatic">
+    <limit effort="1000.0" lower="0" upper="${lenght_l4-y_width_gantry}" velocity="0.5"/> <!-- upper:0.8 -->
+    <parent link="link3"/>
+    <child link="link4"/>
+    <!-- origin pose in the frame of reference of the parent link -->
+    <origin xyz="0 0 ${height_gantry}" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>  <!-- In which axis the movement is performed -->
     <dynamics damping="1.0"/>
   </joint>
 
   <!-- Top Link -->
-  <link name="link3">
+  <link name="link4">
     <collision>
-    <origin xyz="${-lenght_b + axel_offset-width} ${-lenght_c/2-axel_offset+width} ${width*2}"
-              rpy="${pi/2} 0 0"/>
+    <xacro:insert_block name="top_link_origin" />
       <geometry>
-	   <box size="${width} ${width} ${lenght_c}"/>
+	   <box size="${x_width_l4} ${y_width_l4} ${lenght_l4}"/>
       </geometry>
     </collision>
 
     <visual>
-      <origin xyz="${-lenght_b + axel_offset-width} ${-lenght_c/2-axel_offset+width} ${width*2}"
-              rpy="${pi/2} 0 0"/>
+      <xacro:insert_block name="top_link_origin" />
       <geometry>
-	   <box size="${width} ${width} ${lenght_c}"/>
+	   <box size="${x_width_l4} ${y_width_l4} ${lenght_l4}"/>
       </geometry>
     </visual>
 
     <inertial>
-      <origin xyz="0 0 ${lenght_c/2 - axel_offset}" rpy="0 0 0"/>
-      <mass value="${mass3}"/>
-      <inertia
-	  ixx="${mass3 / 12.0 * (width*width + lenght_c*lenght_c)}" ixy="0.0" ixz="0.0"
-	  iyy="${mass3 / 12.0 * (lenght_c*lenght_c + width*width)}" iyz="0.0"
-	  izz="${mass3 / 12.0 * (width*width + width*width)}"/>
+      <xacro:insert_block name="top_link_origin" />
+      <mass value="${mass_l4}"/>
+      <xacro:inertial_cuboid mass="${mass_l4}" x_width="${x_width_l4}" y_width="${y_width_l4}" length="${lenght_l4}" >
+      </xacro:inertial_cuboid> 
     </inertial>
   </link>
 
-  <!-- declare transmissions and actuators required to interface with ROS control -->
+<!-- declare transmissions and actuators required to interface with ROS control -->
+<!-- defines ressource of hardware_interface::EffortJointInterface -->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="prismatic_joint1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
   <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="prismatic_joint2">
@@ -139,6 +208,7 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+
   <transmission name="tran3">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="prismatic_joint3">
@@ -149,5 +219,8 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+
+<?ignore
+?> <!-- end of non-existing processing instruction -->
 
 </robot>

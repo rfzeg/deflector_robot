@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "deflector_commander"); // init ROS and set name of this node
     ros::NodeHandle n; // Create a ROS NodeHandle object
-    ros::Publisher pos_cmd_joint2 = n.advertise<std_msgs::Float64>("/deflector/joint2_position_controller/command", 1);    
+    ros::Publisher pos_cmd_joint1 = n.advertise<std_msgs::Float64>("/deflector/joint1_position_controller/command", 1);    
     //ros::Publisher pos_cmd_3 = n.advertise<std_msgs::Float64>("/deflector/joint2_position_controller/command", 1); 
 
     //create a variable of type "Float64"
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
             }
 
         pos_cmd_float64.data = x_cmd;
-        pos_cmd_joint2.publish(pos_cmd_float64); // publish the value--of type Float64-- 
+        pos_cmd_joint1.publish(pos_cmd_float64); // publish the value--of type Float64-- 
         rate.sleep();
     }
 
