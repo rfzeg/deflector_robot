@@ -14,30 +14,5 @@
                                           joint3_position_controller
                                           joint_state_controller"/>
 
-
-  <!-- Publish joint values from simulation -->
-  <!-- This package reads the robot_description parameter, finds all of the non-fixed joints -->
-  <!-- and publishes a JointState message with all joint positions -->
-  <!-- joint states represent the current state of the robot, not a goal -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="use_gui" value="false"/>
-  </node>
-
-
-  <!-- Publish tf transforms from joint states or rviz, etc -->
-  <!-- Send robot states to tf based on URDF specified by the parameter robot_description -->
-  <!-- and the joint positions from the topic > joint_states  -->
-  <!-- This node publishes a single message with the state of all joints of the robot combined-->
-  <!-- This allows you to see your simulated robot in Rviz as well as do other tasks -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-    <remap from="/joint_states" to="/deflector/joint_states" />
-  </node>
-
-    <!-- Show in Rviz   -->
-    <!--
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find deflector_robot)/launch/deflector_robot.rviz"/>
-    -->
-
-
 </launch>
 
