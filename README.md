@@ -24,6 +24,8 @@ Robot description using **xacro**, debugging robot model in **Gazebo**, position
 + ros_control
 + gazebo_ros_control
 
+Note: This package has only been tested on Ubuntu 16.04 LTS with ROS Kinetic and Gazebo 7.0.  
+
 ### Installation
 
 Clone this repository into a ROS catkin workspace:
@@ -88,7 +90,10 @@ The allowed joint values for the default robot model in this package are:
 
 The PID controller is supplied configured. However if the weights and physical properties of the links are modified, it will be neccesary to re-calibrate the PID gains to get a good performance.
 
-To do so, run:
+Tune each axis independently. For generating alternating position signals for one axis at a time run:  
+`roslaunch deflector_robot position_cmd.launch joint_nr:=1`
+
+To visualize and evaluate the control loop performance run:
 `roslaunch deflector_robot rqt.launch`  
 
 Try to reduce the error between:  
@@ -109,4 +114,9 @@ If the package build fails due to an "Could not find a package configuration fil
 Use:  
 `$ sudo apt-get install ros-kinetic-ros-control ros-kinetic-ros-controllers`
 and then install:  
-`$ sudo apt install ros-kinetic-gazebo-ros-control`   
+`$ sudo apt install ros-kinetic-gazebo-ros-control`  
+
+### Resources
++ http://gazebosim.org/tutorials/?tut=ros_control
++ http://gazebosim.org/tutorials?tut=gravity_compensation
++ http://wiki.ros.org/roscpp/Overview/Parameter%20Server

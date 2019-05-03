@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- Change the joint number based on the joint you want to move -->
+  <!-- note: joint_nr can be overriden by using a command-line argument -->
+  <arg name="joint_nr" default="1"/>
+
+  <node name="position_commander" pkg="deflector_robot" type="deflector_robot" output="screen">
+    <!-- set private parameter for the node  -->
+    <param name="joint" type="int" value="$(arg joint_nr)"/>
+  </node> 
+
+</launch>

@@ -55,6 +55,13 @@ int main(int argc, char ** argv) {
   ros::Publisher pos_cmd_joint1 = n.advertise < std_msgs::Float64 > ("/deflector/joint1_position_controller/command", 1);
   //ros::Publisher pos_cmd_3 = n.advertise<std_msgs::Float64>("/deflector/joint2_position_controller/command", 1); 
 
+  //// Recover private parameter from the launch file
+  // declare variable to get value from parameter server
+  int joint_number;
+  // Use a default value of 99 in case the parameter doesn’t exist
+  ros::param::param<int>("~joint", joint_number, 99);
+  ROS_DEBUG("Got param: %d", joint_number);
+
   std_msgs::Float64 pos_cmd_float64; //create a variable of type "Float64"
   int num_loops = 300; // Will publish a setpoint for num_loops/loopRate
 
