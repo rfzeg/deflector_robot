@@ -42,8 +42,8 @@ $ catkin_make
 $ source devel/setup.bash
 ```
 
-Run the robot in Gazebo with `./start_demo.sh`   
-or alternatively: `roslaunch deflector_robot demo.launch`  
+To run a demo launching each node in a separate terminal window: `./start_demo.sh`   
+Or alternatively to execute all nodes in one terminal: `roslaunch deflector_robot demo.launch`  
 
 ### Optional Checks
 
