@@ -1,7 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-  <!-- Load RQT with a pre-setup GUI for controls from a perspective file  -->
-  <node name="deflector_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
-	output="screen" args="--perspective-file $(find deflector_robot)/launch/deflector_rqt.perspective"/>
+  <!-- Change the joint number based on the joint you want to move -->
+  <!-- note: joint_nr can be overriden by using a command-line argument -->
+  <arg name="joint_nr" default="1"/>
+
+  <!-- Load RQT with pre-setup to visualize joint 1 values  -->
+  <node if="$(eval joint_nr == 1)" 
+    name="deflector_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
+	output="screen" args="--perspective-file $(find deflector_robot)/config/rqt_pid_joint1.perspective"/>
+
+  <!-- Load RQT with pre-setup to visualize joint 2 values  -->
+  <node if="$(eval joint_nr == 2)" 
+    name="deflector_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
+	output="screen" args="--perspective-file $(find deflector_robot)/config/rqt_pid_joint2.perspective"/>
+
+  <!-- Load RQT with pre-setup to visualize joint 3 values  -->
+  <node if="$(eval joint_nr == 3)" 
+    name="deflector_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
+	output="screen" args="--perspective-file $(find deflector_robot)/config/rqt_pid_joint3.perspective"/>
 
 </launch>
