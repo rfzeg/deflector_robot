@@ -6,10 +6,10 @@
 
 
     <!--spawn robot in gazebo world-->
-	<arg name= "pos_x" default = "0"/>
+	<arg name= "pos_x" default = "0.7"/>
 	<arg name= "pos_y" default = "0"/>
-	<arg name= "pos_z" default = "0"/>
-	<arg name= "yaw" default = "0"/>
+	<arg name= "pos_z" default = "0.005"/>
+	<arg name= "yaw" default = "-1.571"/> <!-- rad -->
 
 	<arg name= "robot_name" default= "deflector_robot"/>
 	<node name="urdf_robot_model_spawner" pkg="gazebo_ros" type="spawn_model"

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="deflector_robot_world">
+
+    <physics type="ode">
+      <max_step_size>0.00625</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>160</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+     <!--   <gravity>0 0 0</gravity> -->
+    </physics>
+
+    <!-- Disable shadows. -->
+    <scene>
+      <shadows>false</shadows>
+    </scene>
+
+    <!--  A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+<!-- A cuboid acting as table -->
+    <include>
+      <uri>model://cuboid_table</uri>
+      <!-- raise center of model in order to have the bottom flush with the ground plane -->
+      <pose>1.182801 0.119590 0.855904 0 0 0</pose> 
+    </include>
+
+  </world>
+</sdf>
