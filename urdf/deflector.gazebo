@@ -6,6 +6,7 @@
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
     <robotNamespace>/deflector</robotNamespace> <!-- must be same as ns of controller_spawner -->
+    <legacyModeNS>true</legacyModeNS>
   </plugin>
 </gazebo>
 
