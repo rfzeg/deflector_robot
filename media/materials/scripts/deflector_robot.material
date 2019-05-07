@@ -1,0 +1,132 @@
+material brushed_aluminum
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				// relative to the location of the material script
+                texture ../textures/brushed_aluminum.jpg
+                scale 5.0 0.5 // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material metal_texture
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/metal_texture.jpg
+                scale 5.0 0.5  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material rivetet_plate_1
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/rivetet_plate_1.jpg
+                scale 1.0 0.25  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material rivetet_plate_2
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/rivetet_plate_2.jpg
+                scale 1.0 0.25  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material metal_plate_pattern
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/metal_plate_pattern.jpg
+                scale 1.0 0.25  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material metal_plate_l1
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/metal_plate.jpg
+                scale 1.0 0.091  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}
+
+material metal_plate_l2
+{
+  receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+                // relative to the location of the material script
+				texture ../textures/metal_plate.jpg
+                scale 1.0 0.2  // scale unevenly if body is not a square
+                // use the scale to adjust the size of the texture
+                // here the texture will be tiled 2 times in the surface (1/2 = 0.5)
+			}
+		}
+	}
+}

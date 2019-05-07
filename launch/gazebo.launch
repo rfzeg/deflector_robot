@@ -2,6 +2,7 @@
 <launch>
 
 <!-- Start Gazebo -->
+<!-- <env name="GAZEBO_RESOURCE_PATH" value="$(find deflector_robot)/media/materials" /> -->
 
   <arg name="world" default="empty"/> 
   <arg name="paused" default="false"/>

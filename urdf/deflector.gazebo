@@ -11,27 +11,27 @@
 
   <!-- Ground link -->
   <gazebo reference="link1">
-    <material>Gazebo/Blue</material>
+    <material>metal_plate_l1</material>
   </gazebo>
 
  <!-- Vertical pole -->
  <gazebo reference="link2">
-    <material>Gazebo/Orange</material>
+    <material>metal_plate_l2</material>
   </gazebo>
 
  <!-- Gantry -->
  <gazebo reference="link3">
-    <material>Gazebo/Red</material>
+    <material>brushed_aluminum</material>
   </gazebo>
 
  <!-- Top Link -->
  <gazebo reference="link4">
-    <material>Gazebo/Yellow</material>
+    <material>metal_plate_l2</material>
   </gazebo>
 
- <!-- link4 -->
+ <!-- link5 -->
  <!-- 
- <gazebo reference="link4">
+ <gazebo reference="link5">
     <material>Gazebo/Green</material>
   </gazebo>
  -->
