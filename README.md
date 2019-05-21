@@ -1,4 +1,5 @@
 ## Deflector Robot
+Author: Roberto Zegers R.
 
 A Gazebo simulation of a three degrees-of-freedom robot with prismatic joints.
 
@@ -87,10 +88,36 @@ Note: It is recomended to start typing the command above and press the Tab key u
 The following list shows the joint limits and range of motion measured in meters for the default robot model included in this package:  
 
 + Joint1 from  0.0 to 2.8, range of motion: 2.8 
-+ Joint2 from -0.8 to 0.0, range of motion: 0.8    
++ Joint2 from -0.8 to 0.0, range of motion: 0.8
 + Joint3 from  0.0 to 0.8, range of motion: 0.8
 
 Note that joint 2's movement is in the negative direction of its axis.
+
+### Activate the joints programatically
+Please refer to this minimal code implementation in C++:  
+
+```cpp
+#include <ros/ros.h>
+#include <std_msgs/Float64.h>
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "std_msgs_talker");
+  ros::NodeHandle n;
+  ros::Publisher position_pub = n.advertise<std_msgs::Float64>("/deflector/joint1_position_controller/command", 1000); // set topic name, amountof messages to buffer
+  ros::Rate loop_rate(1); // in Hz
+
+while (ros::ok())
+  {
+    std_msgs::Float64 pos_msg;
+    pos_msg.data = 0.5;
+    position_pub.publish(pos_msg);
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+  return 0;
+}
+```
 
 ### Visualize and tune the PID's controller performance
 
