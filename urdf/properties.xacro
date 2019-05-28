@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="properties">
+
+<!-- Constants -->
+<xacro:property name="PI" value="3.1415926535897931"/>
+<xacro:property name="mass_l1" value="1000.0" />
+<xacro:property name="mass_l2" value="100.0" />
+<xacro:property name="mass_gantry" value="0.1" />
+<xacro:property name="mass_l4" value="10.0" />
+
+<xacro:property name="axel_offset" value="0.1" />
+
+<!-- Size of Robot Axes -->
+<xacro:property name="x_width_l1" value="0.2" /> <!-- when in horizontal plane this is the height -->
+<xacro:property name="y_width_l1" value="0.2" />
+<xacro:property name="lenght_l1" value="3.0" />
+
+<xacro:property name="x_width_l2" value="0.2" /> <!-- same axis as lenght of link 1 -->
+<xacro:property name="y_width_l2" value="0.2" />
+<xacro:property name="lenght_l2" value="1.2" />
+
+<xacro:property name="x_width_gantry" value="0.4" /> <!-- same axis as lenght of link 2 -->
+<xacro:property name="y_width_gantry" value="0.2" />
+<xacro:property name="height_gantry" value="0.05" />
+
+<xacro:property name="x_width_l4" value="0.2" /> <!-- same axis as lenght of link 2 -->
+<xacro:property name="y_width_l4" value="0.2" />  
+<xacro:property name="lenght_l4" value="1.0" />
+
+<!-- Origin Positions and Orientations -->
+<!-- Set the origin pose on the base link (as child frame) -->
+<xacro:property name="base_link_origin">
+  <origin xyz="0 0 ${x_width_l1/2}" rpy="0 ${pi/2} 0" /> <!-- set horizontal orientation -->
+</xacro:property>
+
+<!-- Set the origin pose on the middle link (as child frame) -->
+<xacro:property name="middle_link_origin">
+  <origin xyz="0 0 ${lenght_l2/2}" rpy="0 0 0" /> <!-- vertical orientation by default -->
+</xacro:property>
+
+<!-- Set the origin pose on the gantry link (as child frame) -->
+<xacro:property name="gantry_link_origin">
+  <origin xyz="0 0 ${height_gantry/2}" rpy="0 0 0" />
+</xacro:property>
+
+<!-- Set the origin pose on the top link (child frame) -->
+<xacro:property name="top_link_origin">
+  <origin xyz="0 ${-lenght_l4/2+y_width_gantry/2} ${y_width_l4/2}" rpy="${pi/2} 0 0" />
+</xacro:property>
+
+</robot>

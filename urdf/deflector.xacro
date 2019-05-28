@@ -1,52 +1,12 @@
 <?xml version="1.0"?>
 <robot name="deflector_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find deflector_robot)/urdf/inertia_tensors.urdf.xacro" />
-
-  <xacro:property name="PI" value="3.1415926535897931"/>
-  <xacro:property name="mass_l1" value="1000.0" />
-  <xacro:property name="mass_l2" value="100.0" />
-  <xacro:property name="mass_gantry" value="0.1" />
-  <xacro:property name="mass_l4" value="10.0" />
-
-  <xacro:property name="axel_offset" value="0.1" />
-
-  <xacro:property name="x_width_l1" value="0.2" /> <!-- when in horizontal plane this is the height -->
-  <xacro:property name="y_width_l1" value="0.2" />
-  <xacro:property name="lenght_l1" value="3.0" />
-
-  <xacro:property name="x_width_l2" value="0.2" /> <!-- same axis as lenght of link 1 -->
-  <xacro:property name="y_width_l2" value="0.2" />
-  <xacro:property name="lenght_l2" value="1.2" />
-
-  <xacro:property name="x_width_gantry" value="0.4" /> <!-- same axis as lenght of link 2 -->
-  <xacro:property name="y_width_gantry" value="0.2" />
-  <xacro:property name="height_gantry" value="0.05" />
-
-  <xacro:property name="x_width_l4" value="0.2" /> <!-- same axis as lenght of link 2 -->
-  <xacro:property name="y_width_l4" value="0.2" />  
-  <xacro:property name="lenght_l4" value="1.0" />
-
-<xacro:property name="base_link_origin">
-  <origin xyz="0 0 ${x_width_l1/2}" rpy="0 ${pi/2} 0" /> <!-- set horizontal orientation -->
-</xacro:property>
-
-<xacro:property name="middle_link_origin">
-  <origin xyz="0 0 ${lenght_l2/2}" rpy="0 0 0" /> <!-- vertical orientation by default -->
-</xacro:property>
-
-<!-- set the origin pose on gantry_link (as child frame) -->
-<xacro:property name="gantry_link_origin">
-  <origin xyz="0 0 ${height_gantry/2}" rpy="0 0 0" />
-</xacro:property>
-
-<!-- set the origin pose on top_link (child frame) -->
-<xacro:property name="top_link_origin">
-  <origin xyz="0 ${-lenght_l4/2+y_width_gantry/2} ${y_width_l4/2}" rpy="${pi/2} 0 0" />
-</xacro:property>
-
+<!-- Set the size of robot axes, as well as their positions and orientations -->
+<xacro:include filename="$(find deflector_robot)/urdf/properties.xacro" />
 <!-- Gazebo materials -->
 <xacro:include filename="$(find deflector_robot)/urdf/deflector.gazebo" />
+<!-- Inertia Matrix Calculations -->
+<xacro:include filename="$(find deflector_robot)/urdf/inertia_tensors.urdf.xacro" />
 
 <!-- Used for fixing robot to Gazebo 'base_link' -->
   <link name="world"/>
