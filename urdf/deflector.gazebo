@@ -20,7 +20,7 @@
     <material>metal_plate_l2</material>
   </gazebo>
 
- <!-- Gantry -->
+ <!-- Gantry Cart -->
  <gazebo reference="link3">
     <material>brushed_aluminum</material>
   </gazebo>
@@ -30,11 +30,12 @@
     <material>metal_plate_l2</material>
   </gazebo>
 
- <!-- link5 -->
- <!-- 
- <gazebo reference="link5">
-    <material>Gazebo/Green</material>
+ <!-- End Effector -->
+ <gazebo reference="end_effector_plate">
+    <material>brushed_aluminum</material>
   </gazebo>
- -->
+
+
+ <!-- Others: <material>Gazebo/Green</material> -->
 
 </robot>
