@@ -1,5 +1,6 @@
 #!/bin/sh
 echo "Deflector Robot Simulation and example command algorithm"
+echo ""
 echo "Make sure you have sourced devel/setup.bash"
 echo ""
 xterm  -e  "roslaunch deflector_robot gazebo.launch" &
@@ -12,4 +13,5 @@ xterm  -e  "roslaunch deflector_robot ctrl_manager.launch" &
 sleep 6
 
 # run the position commander algorithm
-xterm  -e  "roslaunch deflector_robot position_cmd.launch joint_nr:=1"
+# xterm  -e  "roslaunch deflector_robot position_cmd.launch joint_nr:=1"
+xterm  -e  "rosrun deflector_robot joint_commander_example"

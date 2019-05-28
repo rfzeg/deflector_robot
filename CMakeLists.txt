@@ -137,9 +137,11 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/deflector_robot_node.cpp)
 
 # add the executable
-add_executable(${PROJECT_NAME} src/deflector_commander.cpp)
+add_executable(deflector_commander src/deflector_commander.cpp)
+add_executable(joint_commander_example src/joint_commander_example.cpp)
 # link the executable to libraries
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(deflector_commander ${catkin_LIBRARIES})
+target_link_libraries(joint_commander_example ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
