@@ -1,13 +1,16 @@
 #!/bin/sh
-echo "Deflector Robot Simulation and example command algorithm"
 echo ""
-echo "Make sure you have sourced devel/setup.bash"
+echo "Deflector Robot Simulation and demo command algorithm"
 echo ""
 xterm  -e  "roslaunch deflector_robot gazebo.launch" &
 sleep 6
 
 xterm  -e  "roslaunch deflector_robot spawn_robot.launch" & 
-sleep 6
+sleep 4
+
+# Spawn table
+xterm  -e  "roslaunch deflector_robot spawn_sdf_models.launch" & 
+sleep 4
 
 xterm  -e  "roslaunch deflector_robot ctrl_manager.launch" & 
 sleep 6

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <world name="deflector_robot_world">
+  <world name="deflector_robot__demo_world">
 
     <physics type="ode">
       <max_step_size>0.00625</max_step_size>
@@ -23,13 +23,6 @@
     <!-- A global light source -->
     <include>
       <uri>model://sun</uri>
-    </include>
-
-<!-- A cuboid acting as table -->
-    <include>
-      <uri>model://cuboid_table</uri>
-      <!-- raise center of model in order to have the bottom flush with the ground plane -->
-      <pose>1.182801 0.119590 0.855904 0 0 0</pose> 
     </include>
 
   </world>
