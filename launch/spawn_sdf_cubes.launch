@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spawns SDF models -->
+
+<launch>
+
+  <!-- Call a python script to the run a service call to gazebo_ros to spawn a SDF model --> 
+  <node name="sdf_spawn_cube1" pkg="gazebo_ros" type="spawn_model" args="-file $(find deflector_robot)/models/wood_cube_20cm/model.sdf -sdf -model cube1 -x 1.25 -y 0.461046 -z 0.93 " />
+  <node name="sdf_spawn_cube2" pkg="gazebo_ros" type="spawn_model" args="-file $(find deflector_robot)/models/wood_cube_20cm/model.sdf -sdf -model cube2 -x 1.25 -y -0.239295 -z 0.93 " />
+  <node name="sdf_spawn_cube3" pkg="gazebo_ros" type="spawn_model" args="-file $(find deflector_robot)/models/wood_cube_20cm/model.sdf -sdf -model cube3 -x 1.25 -y -0.939453 -z 0.93 " />
+
+</launch>
