@@ -2,7 +2,7 @@
 <sdf version="1.4">
 <model name="cuboid_table">
   <static>true</static>
-    <link name="link">
+    <link name="table_top">
       <inertial>
         <mass>500.0</mass>
         <inertia>
@@ -14,7 +14,7 @@
           <ixy>0.0</ixy>
           <!-- for a box: ixz = 0 -->
           <ixz>0.0</ixz>
-          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->          
+          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
           <!-- 0.083 * 500.0 * (0.47344170104 + 0.0025)  -->
           <iyy>19.7515805932</iyy>
           <!-- for a box: iyz = 0 -->
@@ -25,6 +25,7 @@
         </inertia>
       </inertial>
       <collision name="collision">
+      <pose>0 0 0.855904 0 0 0</pose>
         <geometry>
           <box>
             <size>0.688071 3.203140 0.05</size>
@@ -32,6 +33,7 @@
         </geometry>
       </collision>
       <visual name="visual">
+      <pose>0 0 0.855904 0 0 0</pose>
         <geometry>
           <box>
             <size>0.688071 3.203140 0.05</size>
@@ -40,7 +42,191 @@
         <material>
           <script>
             <uri>file://media/materials/scripts/gazebo.material</uri>
-            <name>Gazebo/Grey</name>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+   <link name="table_leg_1">
+      <inertial>
+        <mass>10.0</mass>
+        <inertia>
+          <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+          <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <ixx>0.58133320948</ixx>
+          <!-- for a box: ixy = 0 -->
+          <ixy>0.0</ixy>
+          <!-- for a box: ixz = 0 -->
+          <ixz>0.0</ixz>
+          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <iyy>0.58133320948</iyy>
+          <!-- for a box: iyz = 0 -->
+          <iyz>0.0</iyz>
+          <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.01) -->
+          <izz>0.0166</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+      <pose>-0.2940355 -1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+      <pose>-0.2940355 -1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+   <link name="table_leg_2">
+      <inertial>
+        <mass>10.0</mass>
+        <inertia>
+          <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+          <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <ixx>0.58133320948</ixx>
+          <!-- for a box: ixy = 0 -->
+          <ixy>0.0</ixy>
+          <!-- for a box: ixz = 0 -->
+          <ixz>0.0</ixz>
+          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <iyy>0.58133320948</iyy>
+          <!-- for a box: iyz = 0 -->
+          <iyz>0.0</iyz>
+          <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.01) -->
+          <izz>0.0166</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+      <pose>0.2940355 -1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+      <pose>0.2940355 -1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+   <link name="table_leg_3">
+      <inertial>
+        <mass>10.0</mass>
+        <inertia>
+          <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+          <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <ixx>0.58133320948</ixx>
+          <!-- for a box: ixy = 0 -->
+          <ixy>0.0</ixy>
+          <!-- for a box: ixz = 0 -->
+          <ixz>0.0</ixz>
+          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <iyy>0.58133320948</iyy>
+          <!-- for a box: iyz = 0 -->
+          <iyz>0.0</iyz>
+          <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.01) -->
+          <izz>0.0166</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+      <pose>-0.2940355 1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+      <pose>-0.2940355 1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+   <link name="table_leg_4">
+      <inertial>
+        <mass>10.0</mass>
+        <inertia>
+          <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+          <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <ixx>0.58133320948</ixx>
+          <!-- for a box: ixy = 0 -->
+          <ixy>0.0</ixy>
+          <!-- for a box: ixz = 0 -->
+          <ixz>0.0</ixz>
+          <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.69040145721)  -->
+          <iyy>0.58133320948</iyy>
+          <!-- for a box: iyz = 0 -->
+          <iyz>0.0</iyz>
+          <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          <!-- 0.083 * 10.0 * (0.01 + 0.01) -->
+          <izz>0.0166</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+      <pose>0.2940355 1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+      <pose>0.2940355 1.55157 0.415452 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.830904</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
           </script>
         </material>
       </visual>
