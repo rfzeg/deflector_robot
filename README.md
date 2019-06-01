@@ -1,21 +1,24 @@
 ## Deflector Robot
 Author: Roberto Zegers R.
 
-A Gazebo simulation of a three degrees-of-freedom robot with prismatic joints.
+A Gazebo simulation of a three degrees-of-freedom cartesian robot.
 
 ### Description
-This ROS package contains a set of parametrized macros that allow to quickly build custom models of cartesian robots for simulation. The main structural components are three linear actuators that work in the X-Y-Z coordinate space. Cartesian robots are cost effective, simple to make and easy to control or program.
+This ROS package contains a set of parametrized macros that allow to quickly build custom models of cartesian robots for simulation. The main structural components are three linear actuators oriented perpendicular to each other. The end effector works in the X-Y-Z coordinate space with fixed orientation. The joint space of the robot corresponds directly with the standard right-handed Cartesian xyz-coordinate system, yielding the simplest possible kinematic equations. This makes cartesian robots easy to control or program, but also cost effective and simple to make.
   
 With its default robot configuration this package provides a Gazebo model that can function as a sliding sorter or pusher. By positioning its sliding axes in front of an item's location (on a table, storage rack or conveyor belt) it can grab or push that item to a container bin or aftersort lane.     
+
+![Deflector Robot Demo Animation](doc/imgs/deflector_animation.gif)  
+Figure 1: Deflector Robot in action (animated gif can take a while to load).  
   
 This implementation includes:    
-Robot description using **xacro**, debugging robot model in **Gazebo**, position control with **ROS Control**, a exemplary node to send target joint positions usign a **C++ ROS Publisher** and **RQT configured** for **calibrating PID coefficients**.
+Robot description using **xacro**, debugging robot model in **Gazebo**, position control with **ROS Control**, a exemplary node to send target joint positions usign a **C++ ROS Publisher** and **RQT** configured for **calibrating PID coefficients**.
 
 ### Features
-+ Parametric Modeling: each dimention is configurable and integrated to a mathematical model of the robot. Unlimited different robot configurations are possible by changing individual variables.
++ Parametric Modeling: each dimention is configurable and integrated to a mathematical model of the robot. Unlimited different robot configurations are possible by changing the parameter values.
 + Structural elements can be modelled using square or rectangular cross sections.
-+ Pre-setup GUI to visualize the controller's performance.
-+ Includes ready-to-launch ROS node to show-case the robot movements in simulation.
++ Pre-setup GUI to visualize the PID controller's performance.
++ Ready-to-launch ROS demo node to show-case the robot movements in simulation.
 
 ### Requirements
 
@@ -43,7 +46,7 @@ $ catkin_make
 $ source devel/setup.bash
 ```
 ### Running a Demo Simulation  
-To run a demo launching each node in a separate terminal window use:  
+To run a demo launching each node in a separate xterm windows use:  
  `./start_demo.sh`   
 Alternatively to execute all nodes in one terminal use:  
 `roslaunch deflector_robot demo.launch`  
@@ -69,7 +72,7 @@ Finally, the robot joints can be verified in Rviz by running:
 The joint_state_publisher GUI should appear:
 
 ![](doc/imgs/joint_state_publisher.png)  
-Figure 1: The joint_state_publisher GUI, Rviz is shown on the background.  
+Figure 2: The joint_state_publisher GUI, Rviz is shown on the background.  
 
 The sliders of the joint_state_publisher can be used to confirm in Rviz that the movement of each joint is correct.  
 
@@ -104,7 +107,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "std_msgs_talker");
   ros::NodeHandle n;
-  ros::Publisher position_pub = n.advertise<std_msgs::Float64>("/deflector/joint1_position_controller/command", 1000); // set topic name, amountof messages to buffer
+  ros::Publisher position_pub = n.advertise<std_msgs::Float64>("/deflector/joint1_position_controller/command", 1000); // set topic name, amount of messages to buffer
   ros::Rate loop_rate(1); // in Hz
 
 while (ros::ok())
@@ -135,7 +138,7 @@ To start RQT configured for visualizing position signals for one axis run:
 
 The following window should appear:  
 ![](doc/imgs/rqt_pid_tunning.png) 
-Figure 2: RQT with the Dynamic Reconfigure plugin to the left and rqt_plot the right.  
+Figure 3: RQT with the Dynamic Reconfigure plugin to the left and rqt_plot the right.  
 
 The plot will display following topics in real time to the screen:
 + joint_X_position_controller/command/data
