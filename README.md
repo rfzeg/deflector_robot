@@ -164,6 +164,11 @@ One technique for tuning a PID loop is:
 
 Note that while it is very difficult to get to a perfect tune, it is not too difficult to achieve a tune that is good enough for most use cases.  
 
+### Further work  
+
+Add AndyZe's autotune node in ordert to tune the PID controller with the Ziegler Nichols method.  
+Reference: [uzgit/pid](https://github.com/uzgit/pid/tree/master)  
+
 ### Troubleshooting
 If the package build fails due to an "Could not find a package configuration file provided by 'controller_manager'" error message, then the controller_manager package is not installed.  
 Use:  
